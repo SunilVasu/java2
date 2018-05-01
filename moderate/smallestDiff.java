@@ -10,6 +10,7 @@ public class smallestDiff {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		commonMin();
 		smallestDifference();
 		factorialZeros();
 		//fibin
@@ -22,6 +23,44 @@ public class smallestDiff {
 		for(int i=1;i<=n;i++) {
 			System.out.println(fibinIter(i));
 		}
+	}
+	//find the common min in 2 arr
+	public static void commonMin() {
+		int[] a = {1,4,6,8};
+		int[] b = {9,7,6};
+		int min = Integer.MAX_VALUE;
+		Set<Integer> set = new HashSet<>();
+		for(int i=0;i<a.length;i++) {
+			set.add(a[i]);
+		}
+		for(int i=0;i<b.length;i++) {
+			if(set.contains(b[i])) {
+				min = b[i]<min ? b[i]:min;
+			}
+		}
+		min = min==Integer.MAX_VALUE?0:min;
+		System.out.println("min:"+min);
+		
+		//Common elem in two arr;
+		a = new int[] {8,7,3,2,1};
+		b = new int[] {10,2,1,30,40};
+		Arrays.sort(a);
+		Arrays.sort(b);
+		int p1=0, p2=0;
+		List<Integer> list = new LinkedList();
+		while(p1<a.length && p2<b.length) {
+			if(a[p1]==b[p2]) {
+				list.add(a[p1]);
+				p1++;p2++;
+			}				
+			else if(a[p1]>b[p2])
+				p2++;
+			else 
+				p1++;
+		}
+		System.out.print("Common Elem:");
+		for(int n:list) 
+			System.out.print(n+" ");
 	}
 	//Given two arrays of integers, compute the pair of values (one value in each
 	//array) with the smallest (non-negative) difference. Return the difference.
@@ -78,6 +117,4 @@ public class smallestDiff {
 		}
 		return z;
 	}
-
-	
 }

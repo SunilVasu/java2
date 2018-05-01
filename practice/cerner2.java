@@ -12,7 +12,12 @@ public class cerner2 {
 		pattern();
 		subarr_sum();
 		lpsub();
-		lps();
+		//lpsub_manacher();
+		lpseq();
+		LongestCommonSubstring();
+		longestCommonSeq();
+		edit();
+		longestCommonPrefix();
 	}
 	//2nd largest word in given String
 	public static void string_2() {
@@ -108,12 +113,12 @@ public class cerner2 {
 	static int lo=0, max=0;
 	static int count=0;
 	public static void palindromicSubString() {
-		String s = "aba";
+		String s = "abaq";
 		for(int i=0;i<s.length();i++) {
 			extend(s, i,i);
 			extend(s, i, i+1);
 		}
-		System.out.println("Palindromic Substring:"+s.substring(lo,  max+lo+1));
+		System.out.println("extend @center:Palindromic Substring:"+s.substring(lo,  lo+max+1));
 		System.out.println("Palindromic Substring: count:"+count);
 	}
 	public static void extend(String s, int start, int end) {
@@ -127,25 +132,27 @@ public class cerner2 {
 			max=end-start;
 		}
 	}
-	//(b)dynamic programming: runtime:O(n^2) space:O(n^2)
+	//(b)LongestPalindromicSubString-dynamic programming: runtime:O(n^2) space:O(n^2)
 	public static void lpsub() {
-		String s = "bannanaappt";
+		String s = "cbbd";
 		int start=0, end=0;
 		boolean[][] dp = new boolean[s.length()][s.length()];
 		for(int i=s.length()-1;i>=0;i--) {
 			dp[i][i]=true;
 			for(int j=i+1;j<s.length();j++) {
-				if(s.charAt(i)==s.charAt(j) && dp[i+1][j-1]) {
+				if(s.charAt(i)==s.charAt(j) && (j-i<=2||dp[i+1][j-1])) {
 					dp[i][j]=true;
 					start=i;
 					end=j;
-				}
+				}else
+				 	dp[i][j]=false;
 			}
 		}
-		System.out.println("Longest Palindromic Substring2:"+s.substring(start, end+1)+" size:"+(end-start+1));
+		System.out.println("Longest Palindromic Substring_DP:"+s.substring(start, end+1)+" size:"+(end-start+1));
 	}
+
 	//516. Longest Palindromic Subsequence: runtime:O(n^2) space:O(n^2)
-	public static void lps() {
+	public static void lpseq() {
 		String s = "agbdba";
 		int[][] dp = new int[s.length()][s.length()];
 		for(int i=s.length()-1;i>=0;i--) {
@@ -159,15 +166,85 @@ public class cerner2 {
 		}
 		System.out.println("Longest Palindromic Subsequence:"+dp[0][s.length()-1]);
 	}
-	/*
-	 * agbdba
-	 * # 0 1 2 3 4 5
-	 * 0 1 1 1 1 3 5  <-ans:dp[0][s.length()]
-	 * 1   1 1 1 3 3 
-	 * 2     1 1 3 3
-	 * 3       1 1 1
-	 * 4         1 1
-	 * 5           1 <- start here
+	/*     a g b d b a
+	 *   # 0 1 2 3 4 5
+	 * a 0 1 1 1 1 3 5  <-ans:dp[0][s.length()]
+	 * g 1   1 1 1 3 3 
+	 * b 2     1 1 3 3
+	 * d 3       1 1 1
+	 * b 4         1 1
+	 * a 5           1 <- start here 
 	 */
+	//Longest Common Substring
+	public static void LongestCommonSubstring() {
+		String b="abcd", a="abcui";
+		int[][] dp = new int[a.length()+1][b.length()+1];
+		for(int i=0;i<=a.length();i++) {
+			for(int j=0;j<=b.length();j++) {
+				if(i==0 || j==0)
+					dp[i][j]=0;
+				else if(a.charAt(i-1)==b.charAt(j-1)) {
+						dp[i][j]=dp[i-1][j-1]+1;
+						max=Math.max(max, dp[i][j]);
+				}else
+					dp[i][j]=0;
+			}
+		}
+		System.out.println("Longest Common Substring:"+max);
+	}
+	//Longest Common Subsequence
+	public static void longestCommonSeq() {
+		String a = "abcd", b="aebd";
+		int[][] dp = new int[a.length()+1][b.length()+1];
+		for(int i=0;i<=a.length();i++) {
+			for(int j=0;j<=b.length();j++) {
+				if(i==0||j==0)
+					dp[i][j]=0;
+				else if(a.charAt(i-1)==b.charAt(j-1))
+					dp[i][j]=dp[i-1][j-1]+1;
+				else
+					dp[i][j]=Math.max(dp[i-1][j], dp[i][j-1]);
+			}
+		}
+		System.out.println("Longest Common Subsequence:"+dp[a.length()][b.length()]);
+	}
+	//one edit distance
+	public static void edit() {
+		String a="dog", b="bog";
+		int[][] dp = new int[a.length()+1][b.length()+1];
+		for(int i=0;i<=a.length();i++) {
+			for(int j=0;j<=b.length();j++) {
+				if(i==0)
+					dp[i][j]=j;
+				else if(j==0)
+					dp[i][j]=i;
+				else if(a.charAt(i-1)==b.charAt(j-1))
+					dp[i][j]=dp[i-1][j-1];
+				else
+					dp[i][j]=Math.min(dp[i-1][j], dp[i][j-1])+1; //consider dp[i-1][j-1] for replace
+					
+			}
+		}
+		System.out.println("One Edit:"+dp[a.length()][b.length()]);
+	}
+	//Longest Common Prefix: RunTime=O(minLen*n) space=O(1)
+	public static void longestCommonPrefix() {
+		String[] strs = new String[] {"abc","abcko", "abcolp"};
+		int min=Integer.MAX_VALUE;
+		for(String s:strs)
+			min=Math.min(min, s.length());
+		String res=strs[0].substring(0, min);
+		for(int i=0;i<min;i++) {
+			for(int j=0;j<strs.length-1;j++) {
+				String s1=strs[j];
+				String s2=strs[j+1];
+				if(s1.charAt(i)!=s2.charAt(i))
+					res=s1.substring(0, i);
+			}
+		}
+		//res=res==null?strs[0].substring(0, min):res;
+		System.out.println("longestCommonPrefix:"+res);
+	}
+
 
 }

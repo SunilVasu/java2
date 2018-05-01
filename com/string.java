@@ -74,13 +74,22 @@ public class string {
 		
 		//Using set: runtime: O(n), space: O(n)
 		HashSet<Character> set = new HashSet<>();
+		count=0;
 		for(int i=0;i<s.length();i++) {
-			if(set.contains(s.charAt(i)))
+			if(set.contains(s.charAt(i))) {
 				set.remove(s.charAt(i));
-			else
+				count++;
+			}else {
 				set.add(s.charAt(i));
+			}
 		}
 		System.out.println("PalindromePermutation using set:"+(set.size()<=1));
+		//size of the longest palindrome from this string
+		if(!set.isEmpty()) {
+			System.out.println("PalindromePermutation:"+(2*count+1));
+		}else {
+			System.out.println("PalindromePermutation:"+(2*count));
+		}
 	}
 	/* Palindrome Permutation - 2
 	https://leetcode.com/articles/palindrome-permutation-ii/

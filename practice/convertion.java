@@ -8,6 +8,7 @@ public class convertion {
 		decimal2hex();
 		dec2binary();
 		binary2dec();
+		complement();
 	}
 	public static void hex2decimal() {
 		String hex = "3e8";
@@ -50,5 +51,28 @@ public class convertion {
 			bin=bin/10;
 		}
 		System.out.println("binary2dec:"+val);
+	}
+	public static void complement() {
+		int num=5;
+		int i=0, j=0;
+		while(i<num) {
+			i+=Math.pow(2, j);
+			j++;
+		}
+		System.out.println("Complement2:"+(i-num));
+		
+		//Bit manipulation: Sum of number and its ones' complement
+		int res= ~num & (Integer.highestOneBit(num) - 1);
+		System.out.println("Complement2:"+res);
+		
+		//Numeric Method: Subtraction from 2N
+		double log2 = Math.log(num)/Math.log(2);
+		int floor = (int) Math.floor(log2);
+		int power = (int) Math.pow(2, floor + 1);
+		int complement2 = (power - 1) - num;
+		System.out.println("Complement2:"+complement2);
+		// 2's complement
+		// 1001 --> 0111 i.e [2s_Complement]=[1s_Complement]+[1] given:1001=0110+1=0111 
+		// 1001 --> copy till the first 1 (from right) & then complement rest
 	}
 }

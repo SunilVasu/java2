@@ -3,7 +3,15 @@ package com;
 import java.util.Arrays;
 
 public class Sorts {
-
+	//display
+	public static void display(int[] arr, String name) {
+		System.out.print("\n"+name+"\t");
+		for(int n:arr)
+			System.out.print(n+" ");
+	}
+	public static int[] init() {
+		return new int[] {9,1,2,7,8,3,4,5};
+	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int[] arr = init();
@@ -23,9 +31,19 @@ public class Sorts {
 		arr=init();
 		selectionSort(arr);
 		//InsertionSort
+		arr=init();
 		insertionSort(arr);
 		//BucketSort
+		arr=init();
 		bucketSort(arr);
+		//pancake Sort
+		arr=init();
+		pancakeSort(arr);
+		display(arr,"PancakeSort");
+		//HeapSort
+		arr=init();
+		heapSort(arr);
+		display(arr,"HeapSort");
 		//Binary Search
 		System.out.println("\nBinary Search: "+binarySearch(5));
 		arr = new int[] {1,5,8,3,5,7};
@@ -69,15 +87,12 @@ public class Sorts {
 				int temp = arr[left];
 				arr[left] = arr[right];
 				arr[right] = temp;
-				right--;
-				left++;
+				left++; right--;
 			}
 		}
 		return left;
 	}
 	
-	
-
 	//Bubble Sort : pair wise comparison and at the end the arr is sorted
 	public static void bubbleSort(int[] arr) {
 		for(int i=0;i<arr.length;i++) {
@@ -90,11 +105,10 @@ public class Sorts {
 			}
 		}
 	}
-	//SelectionSort : select the smallest elem and swap with ith elem
+	//SelectionSort: find the smallest elem[index] and swap with ith elem
 	public static void selectionSort(int[] arr) {
-		arr=init();
 		for(int i=0;i<arr.length;i++) {
-			int index = i;
+			int index=i;
 			for(int j=i+1;j<arr.length;j++) {
 				if(arr[index]>arr[j])
 					index=j;
@@ -107,11 +121,10 @@ public class Sorts {
 		}
 		display(arr, "SelectionSort");
 	}
-	
-	//Insertion Sort, select elem and insert into rearrange arr. Shuffling cards
+	//Insertion Sort: pick incorrect elem & insert into correct pos in rearranged arr. 
+	//similar to Shuffling cards
 	public static void insertionSort(int[] arr) {
-		arr = init();
-		for(int i=1;i<arr.length;i++) {
+		for(int i=0;i<arr.length;i++) {
 			int key = arr[i];
 			int j=i-1;
 			while(j>=0 && key<arr[j]) {
@@ -122,33 +135,73 @@ public class Sorts {
 		}
 		display(arr, "InsertionSort");
 	}
-	
 	//bucketSort	
 	public static void bucketSort(int[] arr) {
-	   int maxVal=9;
-	   arr=init();
-	   int[] bucket = new int[maxVal+1];
-	   for(int i=0;i<bucket.length;i++)
-		   bucket[i]=0;
-	   for(int i=0;i<arr.length;i++)
-		   bucket[arr[i]]++;
+		int maxVal=9;
+		init();
+		int[] bucket = new int[maxVal+1];
+		for(int i=0;i<bucket.length;i++)
+			bucket[i]=0;
+		for(int n:arr)
+			bucket[n]++;
+		int pos =0;
+		for(int i=0;i<bucket.length;i++)
+			for(int j=0;j<bucket[i];j++)
+				arr[pos++]=i;
 	   
-	   int pos=0;
-	   for(int i=0;i<bucket.length;i++)
-		   for(int j=0;j<bucket[i];j++)
-			   arr[pos++]=i;
 	   display(arr,"BucketSort");
 	}
-   //display
-	public static void display(int[] arr, String name) {
-		System.out.print("\n"+name+"\t");
-		for(int n:arr)
-			System.out.print(n+" ");
+	//pancake sort
+	public static void pancakeSort(int[] arr) {
+		for(int i=arr.length-1;i>=0;i--) {
+			int maxIndex = findIndex(arr, i);
+			flip(arr, maxIndex);
+			flip(arr, i);
+		}
 	}
-	public static int[] init() {
-		return new int[] {9,1,2,7,8,3,4,5};
+	public static int findIndex(int[] arr, int k) {
+		int index=0;
+		for(int i=0;i<=k;i++)
+			if(arr[i]>arr[index])
+				index=i;
+		return index;
 	}
-	
+	public static void flip(int[] arr, int k) {
+		double pivot = Math.floor((k+1)/2);
+		for(int i=0;i<(int)pivot;i++) {
+			int temp = arr[i];
+			arr[i] = arr[k-i];
+			arr[k-i] = temp;
+		}
+	}
+	//HeapSort
+	public static void heapSort(int[] arr) {
+		int n = arr.length;
+		for(int i=n/2-1;i>=0;i--)
+			heapify(arr, n, i);
+		for(int i=n-1;i>=0;i--) {
+			int temp = arr[i];
+			arr[i] = arr[0];
+			arr[0] = temp;
+			heapify(arr, n, i);
+		}
+	}
+	public static void heapify(int[] arr, int n, int i) {
+		int largest = i;
+		int left = 2*i+1;
+		int right = left+1;
+		if(left<n && arr[left]<arr[largest])
+			largest = left;
+		if(right<n && arr[right]<arr[largest])
+			largest = right;
+		if(largest!=i) {
+			int temp = arr[i];
+			arr[i] = arr[largest];
+			arr[largest] = temp;
+			heapify(arr, n, largest);
+		}
+	}
+	//Binary Search
 	public static int binarySearch(int x) {
 		int[] arr = new int[] {9,1,2,7,8,3,4,5};
 		Arrays.sort(arr);

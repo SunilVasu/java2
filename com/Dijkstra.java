@@ -23,7 +23,6 @@ public class Dijkstra {
         }
         return min_index;
     }
-
     public void dijkstra(int[][] graph, int src){
         int[] dist = new int[V];
         boolean[] sptSet = new boolean[V];
@@ -51,7 +50,6 @@ public class Dijkstra {
         }
         printGraph(dist,V);
     }
-
     public static void main(String[] args){
         //                            0, 1, 2, 3, 4, 5, 6, 7, 8
         int graph[][] = new int[][]{ {0, 4, 0, 0, 0, 0, 0, 8, 0},   //0

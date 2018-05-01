@@ -8,7 +8,7 @@ import java.util.Stack;
 public class traversal {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
+		// DS | BQ = DFS-->stack, BFS-->Queue
 		/*
 		 * 			1
 		 *		2 		3
@@ -26,94 +26,93 @@ public class traversal {
         root.left.left = new TreeNode(4);
         root.left.right = new TreeNode(5);
         
+        System.out.print("inorder:\t");
         inorder(root);
-        System.out.println("\n");
+        System.out.print("\npre-order:\t");
         preorder(root);
-        System.out.println("\n");
+        System.out.print("\npost-order:\t");
         postorder(root);
-        System.out.println("\n");
+        System.out.print("\nbfs:\t");
         bfs(root);
-        System.out.println("\n");
+        System.out.print("\nbfs2:\t");
         bfs2(root);
 	}
 	public static void inorder(TreeNode root) {
 		Stack<TreeNode> stack = new Stack<>();
-		List<Integer> list = new LinkedList<>(); 
+		List<Integer> res = new LinkedList<>();
 		while(root!=null || !stack.isEmpty()) {
 			while(root!=null) {
 				stack.push(root);
 				root=root.left;
 			}
 			root=stack.pop();
-			list.add(root.val);
+			res.add(root.val);
 			root=root.right;
 		}
-		for(int n:list)
+		for(int n:res)
 			System.out.print(n+" ");
 	}
 	public static void preorder(TreeNode root) {
 		Stack<TreeNode> stack = new Stack<>();
-		List<Integer> list = new LinkedList<>();
+		List<Integer> res = new LinkedList<>();
 		while(root!=null || !stack.isEmpty()) {
 			if(root!=null) {
-				list.add(root.val);
+				res.add(root.val);
 				stack.push(root.right);
 				root=root.left;
 			}else {
 				root=stack.pop();
 			}
 		}
-		for(int n:list)
+		for(int n:res)
 			System.out.print(n+" ");
 	}
 	public static void postorder(TreeNode root) {
-		Stack<TreeNode> stack = new Stack();
-		LinkedList<Integer> list = new LinkedList<>();
+		Stack<TreeNode> stack = new Stack<>();
+		List<Integer> res = new LinkedList<>();
 		while(root!=null || !stack.isEmpty()) {
 			if(root!=null) {
+				res.add(0,root.val);
 				stack.push(root);
-				list.addFirst(root.val);
 				root=root.right;
 			}else {
 				root=stack.pop().left;
 			}
 		}
-		
-		for(int n:list)
+		for(int n:res)
 			System.out.print(n+" ");
 	}
 	public static void bfs(TreeNode root) {
 		Queue<TreeNode> queue = new LinkedList<>();
-		List<Integer> list = new LinkedList<>();
+		List<Integer> res = new LinkedList<>();
 		queue.add(root);
 		while(!queue.isEmpty()) {
 			TreeNode temp = queue.poll();
-			list.add(temp.val);
+			res.add(temp.val);
 			if(temp.left!=null) queue.add(temp.left);
 			if(temp.right!=null) queue.add(temp.right);
 		}
-		for(int n:list)
+		for(int n:res)
 			System.out.print(n+" ");
 	}
 	public static void bfs2(TreeNode root) {
 		Queue<TreeNode> queue = new LinkedList<>();
-		List<List<Integer>> list = new LinkedList<>();
+		List<List<Integer>> res = new LinkedList<>();
 		queue.add(root);
 		while(!queue.isEmpty()) {
-			
-			List<Integer> sublist = new LinkedList();
 			int level = queue.size();
+			List<Integer> sublist = new LinkedList<>();
 			for(int i=0;i<level;i++) {
-				TreeNode temp = queue.poll();
+				TreeNode temp = queue.remove();
 				sublist.add(temp.val);
 				if(temp.left!=null) queue.add(temp.left);
 				if(temp.right!=null) queue.add(temp.right);
 			}
-			list.add(sublist);
+			res.add(sublist);
 		}
-		for(List<Integer> l:list) {
+		for(List<Integer> list:res) {
 			System.out.print("[ ");
-			for(int n:l)
+			for(int n:list)
 				System.out.print(n+" ");
 			System.out.print("]");
 		}

@@ -1,4 +1,4 @@
-package com;
+package bitManipulation;
 
 public class bit_manipulation {
 	//example of inner class
@@ -14,7 +14,7 @@ public class bit_manipulation {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		//trick();
+		trick();
 		//insertion();
 		System.out.println("binary: "+Integer.toBinaryString(-1));
 		test t = new test();
@@ -31,7 +31,7 @@ public class bit_manipulation {
 		
 		//get ith bit
 		int i=6;
-		System.out.println("N:"+Integer.toBinaryString(N)+" i:"+i);
+		System.out.println("BitManipulation Tricks: N:"+Integer.toBinaryString(N)+" i:"+i);
 		int result = (N&(1<<i)) != 0 ?1:0;
 		System.out.println("get ith bit:"+Integer.toBinaryString(result));
 		//set ith bit
@@ -46,14 +46,14 @@ public class bit_manipulation {
 		N=N&(mask);
 		System.out.println("clear MSB to i:"+Integer.toBinaryString(N));
 		//clear i to 0
-		N = 0b11111111;
-		mask =~0<<(i);   //11110000   -1<<(i+1)
+		N = 0b11111111; //N=-1;
+		mask =~0<<(i+1);   //11110000   -1<<(i+1)
 		N=N&mask;
 		System.out.println("clear i to 0:"+Integer.toBinaryString(N));
-		//update
-		int val =0;
+		//update i to val
+		int val =1;
 		N=N&~(1<<i) | (val<<i);
-		System.out.println("update i:"+Integer.toBinaryString(N));
+		System.out.println("update i:"+Integer.toBinaryString(N)+"\n");
 	}
 	public static void insertion() {
 		int i=2, j=6;

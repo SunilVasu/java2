@@ -6,7 +6,7 @@ package com;
 public class knapsack {
     public static void main(String[] args){
         knapsack ks = new knapsack();
-        //given a bag of size W, we need to max the value of items that can be put in it.
+        //given a bag of size W, we need to maximize the value of items that can be put in it.
         //given W, find max val && sum(w)<=W
         int[] val = new int[]{60,100,120};
         int[] wt = new int[]{10,20,30};
@@ -20,11 +20,9 @@ public class knapsack {
     public int recursion(int W, int[] wt, int[] val, int n){
         //3 condition
         //vals length is 0 or the W is 0
-        if(n==0 || W==0)
-            return 0;
+        if(n==0 || W==0) return 0;
         //If wt of the nth item is more than W, we exclude this from the list.
-        if(wt[n-1]>W)
-            return recursion(W, wt, val, n-1);
+        if(wt[n-1]>W) return recursion(W, wt, val, n-1);
         //if nth item wt is less than W return max wt of
         //1)nth item included 2)nth item not included
         else

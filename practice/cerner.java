@@ -4,11 +4,19 @@ import java.util.HashMap;
 
 public class cerner {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
 		// TODO Auto-generated method stub
-		sum_2();
+		/*sum_2();
 		sum_3();
-		sum_4();
+		sum_4();*/
+		throw new Exception();
+		/*try {
+			System.out.println("Inside try");
+			throw new Exception();
+		}catch(Exception e){
+			System.out.println(e);
+			//e.printStackTrace();
+		}*/
 	}
 	public static void sum_2() {
 		HashMap<Integer, Integer> map = new HashMap<>();

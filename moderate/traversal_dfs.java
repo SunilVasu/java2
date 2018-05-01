@@ -12,15 +12,16 @@ class TreeNode{
 	TreeNode right;
 	TreeNode(int x){ val=x; }
 }
-/*Depth First Traversals:
-(a) Inorder (Left, Root, Right) : 4 2 5 1 3
-(b) Preorder (Root, Left, Right) : 1 2 4 5 3
-(c) Postorder (Left, Right, Root) : 4 5 2 3 1*/
-/*
- * 			1
- *		2 		3
- *    4	  5
- * */
+	/*Depth First Traversals:
+	(a) Inorder (Left, Root, Right) : 4 2 5 1 3
+	(b) Preorder (Root, Left, Right) : 1 2 4 5 3
+	(c) Postorder (Left, Right, Root) : 4 5 2 3 1*/
+	/*
+	 * 			1
+	 *		2 		3
+	 *    4	  5
+	 */
+
 public class traversal_dfs {
 	public static void display(List<Integer> list, String name) {
 		System.out.print(name+" : ");
@@ -107,8 +108,7 @@ public class traversal_dfs {
 				list.addFirst(root.val);
 				root=root.right;
 			}else {
-				TreeNode temp = stack.pop();
-				root=temp.left;
+				root = stack.pop().left;
 			}
 		}
 		return list;

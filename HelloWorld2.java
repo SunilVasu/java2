@@ -10,6 +10,17 @@ public class HelloWorld2 {
 	}
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
+		//test();
+		//display();
+		string();
+		 
+		 
+	}
+	public static void string() {
+		String s = "HelloWorld";
+		System.out.println(s.substring(2));
+	}
+	public static void test() {
 		System.out.println("HelloWorld2!!");
 		display();
 		HelloWorld2 h1 = new HelloWorld2();
@@ -61,11 +72,7 @@ public class HelloWorld2 {
 		 for(String str:arr)
 		 System.out.println(str);
 		 
-
-		 
-		 
 	}
-	
 	public static void display() {
 		System.out.println("Displayed from static function \"display\"");
 		System.out.println("HelloWorld2");

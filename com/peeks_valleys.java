@@ -5,9 +5,9 @@ import java.util.Arrays;
 /**
  * Created by sunil on 11/8/17.
  */
-public class peeks_Valleys {
+public class peeks_valleys {
     public static void main(String[] args){
-        peeks_Valleys pv = new peeks_Valleys();
+        peeks_valleys pv = new peeks_valleys();
         int[] arr = new int[]{0,1,4,7,8,9};
 
         System.out.print("Input:: ");
