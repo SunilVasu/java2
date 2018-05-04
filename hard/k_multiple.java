@@ -1,4 +1,4 @@
-package com;
+package hard;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Queue;
 
 public class k_multiple {
-
+	//find the kth number such that the only prime factors are 3, 5 & 7
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int k=4;
@@ -22,6 +22,7 @@ public class k_multiple {
 		
 		System.out.println("\nOptimized Result::"+getKthNumber(k));
 	}
+	//Runtime: allPossibilities=O(k^3) + sort=O(k^3*log(k^3)) => O(k^3*log(k))
 	public static List<Integer> allPossibilities(int k){
 		List<Integer> values = new ArrayList<>();
 		for(int a=0;a<=k;a++) {

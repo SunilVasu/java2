@@ -49,6 +49,7 @@ public class HelloWorld {
 		n=10;
 		System.out.println("\nstairs:"+countWays(n)+":");
 		System.out.println("stairs:"+countWays_memo(n, new int[n+1])+":");
+		System.out.println("Stairs dp:"+countWays_dp(n));
 		//print power of 2 from 1 throught n(inclusive)
 		System.out.print("\n\npowerOf2:");
 		powerOf2(16);
@@ -86,7 +87,8 @@ public class HelloWorld {
 	//(d)fibin dp bottom-->upRuntime: O(N) space=:O(N) = DP (bottom→up)
 	public static int fibinMemo2(int n, int[] memo) {
 		if(n==0||n==1) return n;
-		memo[0]=0; memo[1]=1;
+		memo[0]=0; 
+		memo[1]=1;
 		for(int i=2;i<=n;i++) {
 			memo[i]=memo[i-1]+memo[i-2];
 		}
@@ -99,13 +101,25 @@ public class HelloWorld {
 		else
 			return countWays(n-1)+countWays(n-2)+countWays(n-3);
 	}
-	//using memoization
+	//triple steps: using memoization (top→down)
 	public static int countWays_memo(int n, int[] memo) {
 		if(n<0) return 0;
 		else if(n==0 || n==1) return 1;
 		else if(memo[n]==0)
 			memo[n] = countWays_memo(n-1,memo)+countWays_memo(n-2, memo)+countWays_memo(n-3, memo);
 		return memo[n];
+	}
+	//DP (bottom→up)
+	public static int countWays_dp(int n) {
+		int[] dp = new int[n+1];
+		if(n<0) return 0;
+		else if(n==0 || n==1) return 1;
+		dp[0]=1;
+		dp[1]=1; 
+		dp[2]=2;
+		for(int i=3;i<=n;i++)
+			dp[i]=dp[i-1]+dp[i-2]+dp[i-3];
+		return dp[n];
 	}
 	
 	

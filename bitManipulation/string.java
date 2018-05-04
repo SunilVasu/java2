@@ -54,8 +54,10 @@ public class string {
 				for(char c:String.valueOf(count).toCharArray())
 					chars[indexAns++]=c;
 		}
+		System.out.println("\nCompress:");
 		for(int i=0;i<indexAns;i++)
 			System.out.print(chars[i]);
+		System.out.println();
 	}
 	//max subarray with equal num of letter & digit
 	//1)compute delta arr with diff
@@ -92,7 +94,6 @@ public class string {
 			}
 		}
 		//res [p1+1, p2]
-		System.out.println("letters_numbers:"+str.substring(p1+1, p2+1));
+		System.out.println("\nletters_numbers:"+str.substring(p1+1, p2+1));
 	}
-
 }

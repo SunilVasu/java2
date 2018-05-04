@@ -63,5 +63,6 @@ public class math {
 		}
 		System.out.println("countPrimes:"+count);
 	}
+	
 
 }

@@ -26,12 +26,13 @@ public class permutation {
 			}
 		}System.out.println("");
 	}
-	/*public static void stringPermutation() {
-		String str = "abcd";
+	public static void stringPermutation() {
+		String str = "abc";
 		List<String> list = new LinkedList<>();
-		helper(list, str,"");
+		/*helper(list, str,"");
+		display(list);*/
 		
-		display(list);
+		helper2(str,"");
 			
 	}
 	//String permutation
@@ -44,20 +45,14 @@ public class permutation {
 				helper(list, rem, prefix+str.charAt(i));
 			}
 		}
-	}*/
-	public static void stringPermutation() {
-		String str = "Hello";
-		List<String> list = new LinkedList<>();
-		helper(list, str, "");
-		display(list);
 	}
-	public static void helper(List<String> list, String str, String prefix) {
+	public static void helper2(String str, String prefix) {
 		if(str.length()==0)
-			list.add(prefix);
+			System.out.println(prefix);
 		else {
 			for(int i=0;i<str.length();i++) {
 				String rem = str.substring(0, i)+str.substring(i+1);
-				helper(list, rem, prefix+str.charAt(i));
+				helper2(rem, prefix+str.charAt(i));
 			}
 		}
 	}
