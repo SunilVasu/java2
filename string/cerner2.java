@@ -1,6 +1,7 @@
-package practice;
+package string;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class cerner2 {
 
@@ -11,8 +12,8 @@ public class cerner2 {
 		palindromicSubString();
 		pattern();
 		subarr_sum();
-		lpsub();
-		//lpsub_manacher();
+		
+		lpsub();  //lpsub_manacher();
 		lpseq();
 		LongestCommonSubstring();
 		longestCommonSeq();
@@ -245,6 +246,4 @@ public class cerner2 {
 		//res=res==null?strs[0].substring(0, min):res;
 		System.out.println("longestCommonPrefix:"+res);
 	}
-
-
 }

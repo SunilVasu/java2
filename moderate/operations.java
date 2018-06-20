@@ -1,7 +1,7 @@
 package moderate;
 
 public class operations {
-
+	//All operation using only add
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int a=3, b=2;
@@ -13,7 +13,7 @@ public class operations {
 	//negate of a number
 	public static int negate2(int a) {
 		int neg=0;
-		int sign=a>0?1:-1;
+		int sign=a<0?1:-1;
 		while(a!=0) {
 			neg+=sign;
 			a+=sign;

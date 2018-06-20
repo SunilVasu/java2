@@ -1,8 +1,8 @@
-package com;
+package sort;
 
 import java.util.Arrays;
 
-public class Sorts {
+public class Sorts_bckup {
 	//display
 	public static void display(int[] arr, String name) {
 		System.out.print("\n"+name+"\t");
@@ -47,8 +47,9 @@ public class Sorts {
 		//Binary Search
 		System.out.println("\nBinary Search: "+binarySearch(5));
 		arr = new int[] {1,5,8,3,5,7};
-		System.out.println("Binary Search Recursion: "+binarySearchRecursion(arr, 0, arr.length, 5));
+		System.out.println("Binary Search Recursion: "+binarySearchRecursion(arr, 0, arr.length, 3));
 	}
+	//MergeSort: O(nlog(n)); space=O(n) due to the auxillary space used
 	public static void mergeSort(int[] arr, int[] helper, int start, int end) {
 		if(start>=end) return;
 		int mid = (start+end)/2;
@@ -59,7 +60,11 @@ public class Sorts {
 	public static void merge(int[] arr, int[] helper, int start, int mid, int end) {
 		for(int i=start;i<=end;i++)
 			helper[i]=arr[i];
-		int h_left=start, h_right=mid+1, curr=start;
+		
+		int h_left=start;
+		int h_right=mid+1;
+		int curr=start;
+		
 		while(h_left<=mid && h_right<=end) {
 			if(helper[h_left]<helper[h_right])
 				arr[curr++] = helper[h_left++];
@@ -69,7 +74,7 @@ public class Sorts {
 		while(h_left<=mid)
 			arr[curr++] = helper[h_left++];
 	}
-	//QuickSort
+	//QuickSort: RT = O(nlog(n)) avg : worst case O(n^2); space=O(log n) 
 	public static void quickSort(int[] arr, int left, int right) {
 		if(left>=right) return;
 		int index = partition(arr, left, right);
@@ -92,22 +97,22 @@ public class Sorts {
 		}
 		return left;
 	}
-	//Bubble Sort : pair wise comparison and at the end the arr is sorted
+	//Bubble Sort : pair wise comparison and at the end the arr is sorted: RT=O(n^2); space=O(1)
 	public static void bubbleSort(int[] arr) {
 		for(int i=0;i<arr.length;i++) {
 			for(int j=0;j<arr.length-1;j++) {
 				if(arr[j]>arr[j+1]) {
-					int temp = arr[j+1];
-					arr[j+1] = arr[j];
-					arr[j] = temp;
+					int temp = arr[j];
+					arr[j] = arr[j+1];
+					arr[j+1] = temp;
 				}
 			}
 		}
 		display(arr, "BubbleSort");
 	}
-	//SelectionSort: find the smallest elem["index"] and swap with ith elem
+	//SelectionSort: find the smallest elem[index] and swap with ith elem: RT:O(n^2); space=O(1)
+	//childs algo, find smallest by linear span and bring it to front, next find 2nd smallest ..etc
 	public static void selectionSort(int[] arr) {
-		init();
 		for(int i=0;i<arr.length;i++) {
 			int index = i;
 			for(int j=i+1;j<arr.length;j++) {
@@ -117,15 +122,14 @@ public class Sorts {
 			if(index!=i) {
 				int temp = arr[index];
 				arr[index] = arr[i];
-				arr[i] = temp;
+				arr[i] = temp; 
 			}
 		}
-		display(arr, "SelectionSort:");
+		display(arr,"SelectionSort");
 	}
-	//Insertion Sort: pick incorrect elem & insert into correct pos in rearranged arr. 
+	//Insertion Sort: pick incorrect elem & insert into correct pos in rearranged arr. RT:O(n^2); space=O(1)
 	//similar to Shuffling cards
 	public static void insertionSort(int[] arr) {
-		init();
 		for(int i=0;i<arr.length;i++) {
 			int key = arr[i];
 			int j=i-1;
@@ -137,7 +141,7 @@ public class Sorts {
 		}
 		display(arr, "InsertionSort");
 	}
-	//bucketSort
+	//bucketSort	
 	public static void bucketSort(int[] arr) {
 		init();
 		int maxValue=9;
@@ -202,7 +206,7 @@ public class Sorts {
 			heapify(arr, n, largest);
 		}
 	}
-	//Binary Search: find 5
+	//Binary Search
 	public static int binarySearch(int x) {
 		int[] arr = new int[] {9,1,2,7,8,3,4,5};
 		Arrays.sort(arr);
@@ -222,6 +226,7 @@ public class Sorts {
 	}
 	
 	public static int binarySearchRecursion(int[] arr, int start, int end, int n) {
+		
 		if(start>end)
 			return -1;
 		int mid = (start+end)/2;

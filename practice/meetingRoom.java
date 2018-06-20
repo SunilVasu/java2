@@ -34,13 +34,14 @@ public class meetingRoom {
 	}
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		test();
+		//test();
 		meetingRoom();
 		meetingRoom2();
-		merge();
+		mergeIntervals();
 		insertInterval();
 		meetingPlanner();
 	}
+	//test priority queue
 	public static void test() {
 		PriorityQueue<Integer> pqueue = new PriorityQueue<>(5,new Comparator<Integer>() {
 			public int compare(Integer a, Integer b) {
@@ -58,7 +59,6 @@ public class meetingRoom {
 		pqueue.removeAll(pqueue);
 		System.out.println("size="+pqueue.size());
 	}
-
 	//Meeting Room: determine if a person can attend all meeting slots
 	public static void meetingRoom() {
 		List<Interval> input = init();
@@ -89,7 +89,7 @@ public class meetingRoom {
 		queue.offer(input.get(0).end);
 		int count=1;
 		for(int i=1;i<input.size();i++) {
-			if(input.get(i).start<queue.poll())
+			if(input.get(i).start<queue.peek())
 				count++;
 			else
 				queue.poll();
@@ -98,44 +98,41 @@ public class meetingRoom {
 		System.out.println("\nmeetingRoom2 rooms:"+count);
 	}
 	//merge input, compare overlapping inputs
-	public static void merge() {
+	public static void mergeIntervals() {	
 		List<Interval> input = init();
 		List<Interval> result = new LinkedList<>();
-		if(input==null || input.size()==0) {
-			System.out.println("list is Empty:"+result);
-			return;
-		}
-		
 		Collections.sort(input, new Comparator<Interval>() {
 			public int compare(Interval i1, Interval i2) {
-				if(i1.start!=i2.start)
+				if(i1.start>i2.start)
 					return i1.start-i2.start;
 				else
 					return i1.end-i2.end;
 			}
-		});		
+		});
 		Interval prev = input.get(0);
 		for(int i=1;i<input.size();i++) {
 			Interval curr = input.get(i);
 			if(curr.start>prev.end) {
 				result.add(prev);
-				prev=curr;
+				prev = curr;
 			}else {
 				Interval merge = new Interval(prev.start, Math.max(prev.end, curr.end));
 				prev=merge;
 			}
 		}
-		result.add(prev);		
+		result.add(prev);
 		System.out.print("\nMerged Interval => ");
 		display(result);
 	}
 	//Insert a new interval
 	public static void insertInterval() {
-		List<Interval> input = new LinkedList<>();
-		input.add(new Interval(1,4));
-		input.add(new Interval(9,15));
-		Interval newInterval = new Interval(5,8); //to insert
-		
+		List<Interval> input = init();
+		Collections.sort(input, new Comparator<Interval>() {
+			public int compare(Interval i1, Interval i2) {
+				return i1.start-i2.start;
+			}
+		});
+		Interval newInterval = new Interval(2,8); //to insert	
 		List<Interval> result = new LinkedList<>();
 		
 		for(Interval interval:input) {
@@ -149,7 +146,6 @@ public class meetingRoom {
 						Math.max(interval.end, newInterval.end));
 			}
 		}
-		
 		result.add(newInterval);
 		System.out.print("\ninsertInterval Interval => ");
 		display(result);
@@ -185,4 +181,5 @@ public class meetingRoom {
 		}
 		System.out.println("meetingPlanner: not suitable time found");
 	}
+
 }

@@ -1,8 +1,8 @@
-package com;
+package sort;
 
 import java.util.Arrays;
 
-public class Sorts_bckup {
+public class Sorts {
 	//display
 	public static void display(int[] arr, String name) {
 		System.out.print("\n"+name+"\t");
@@ -47,34 +47,34 @@ public class Sorts_bckup {
 		//Binary Search
 		System.out.println("\nBinary Search: "+binarySearch(5));
 		arr = new int[] {1,5,8,3,5,7};
-		System.out.println("Binary Search Recursion: "+binarySearchRecursion(arr, 0, arr.length, 3));
+		System.out.println("Binary Search Recursion: "+binarySearchRecursion(arr, 0, arr.length, 5));
+		System.out.println("Binary Search Rotated Arr: "+binarySearch_rotated(new int[] {2,5,6,7,1,2,2}, 2));
 	}
-	//MergeSort: O(nlog(n)); space=O(n) due to the auxillary space used
 	public static void mergeSort(int[] arr, int[] helper, int start, int end) {
 		if(start>=end) return;
 		int mid = (start+end)/2;
 		mergeSort(arr, helper, start, mid);
 		mergeSort(arr, helper, mid+1, end);
 		merge(arr, helper, start, mid, end);
+		
 	}
 	public static void merge(int[] arr, int[] helper, int start, int mid, int end) {
 		for(int i=start;i<=end;i++)
 			helper[i]=arr[i];
-		
 		int h_left=start;
 		int h_right=mid+1;
 		int curr=start;
-		
 		while(h_left<=mid && h_right<=end) {
-			if(helper[h_left]<helper[h_right])
-				arr[curr++] = helper[h_left++];
+			if(helper[h_left]>helper[h_right])
+				arr[curr++]=helper[h_right++];
 			else
-				arr[curr++] = helper[h_right++];
+				arr[curr++]=helper[h_left++];
 		}
 		while(h_left<=mid)
-			arr[curr++] = helper[h_left++];
+			arr[curr++]=helper[h_left++];
 	}
-	//QuickSort: RT = O(nlog(n)) avg : worst case O(n^2); space=O(log n) 
+	
+	//QuickSort
 	public static void quickSort(int[] arr, int left, int right) {
 		if(left>=right) return;
 		int index = partition(arr, left, right);
@@ -82,55 +82,57 @@ public class Sorts_bckup {
 		quickSort(arr, index, right);
 	}
 	public static int partition(int[] arr, int left, int right) {
-		int pivot = arr[(left+right)/2];
+		int pivot = arr[(right+left)/2];
 		while(left<=right) {
-			while(arr[left]<pivot) 
-				left++;			
+			while(arr[left]<pivot)
+				left++;
 			while(arr[right]>pivot)
 				right--;
 			if(left<=right) {
 				int temp = arr[left];
 				arr[left] = arr[right];
 				arr[right] = temp;
-				left++; right--;
+				left++;
+				right--;
 			}
 		}
 		return left;
 	}
-	//Bubble Sort : pair wise comparison and at the end the arr is sorted: RT=O(n^2); space=O(1)
+	//Bubble Sort : pair wise comparison and at the end the arr is sorted
 	public static void bubbleSort(int[] arr) {
 		for(int i=0;i<arr.length;i++) {
 			for(int j=0;j<arr.length-1;j++) {
 				if(arr[j]>arr[j+1]) {
-					int temp = arr[j];
-					arr[j] = arr[j+1];
-					arr[j+1] = temp;
+					int temp = arr[j+1];
+					arr[j+1] = arr[j];
+					arr[j] = temp;
 				}
 			}
 		}
 		display(arr, "BubbleSort");
 	}
-	//SelectionSort: find the smallest elem[index] and swap with ith elem: RT:O(n^2); space=O(1)
-	//childs algo, find smallest by linear span and bring it to front, next find 2nd smallest ..etc
+	//SelectionSort: find the smallest elem["index"] and swap with ith elem
 	public static void selectionSort(int[] arr) {
+		init();
 		for(int i=0;i<arr.length;i++) {
 			int index = i;
 			for(int j=i+1;j<arr.length;j++) {
-				if(arr[index]>arr[j])
+				if(arr[j]<arr[index])
 					index=j;
 			}
-			if(index!=i) {
-				int temp = arr[index];
-				arr[index] = arr[i];
-				arr[i] = temp; 
+			if(i!=index) {
+				int temp = arr[i];
+				arr[i] = arr[index];
+				arr[index] = temp;
 			}
 		}
-		display(arr,"SelectionSort");
+		display(arr, "SelectionSort:");
 	}
-	//Insertion Sort: pick incorrect elem & insert into correct pos in rearranged arr. RT:O(n^2); space=O(1)
+	//Insertion Sort: pick incorrect elem & insert into correct pos in rearranged arr. 
 	//similar to Shuffling cards
 	public static void insertionSort(int[] arr) {
-		for(int i=0;i<arr.length;i++) {
+		init();
+		for(int i=1;i<arr.length;i++) {
 			int key = arr[i];
 			int j=i-1;
 			while(j>=0 && key<arr[j]) {
@@ -141,19 +143,19 @@ public class Sorts_bckup {
 		}
 		display(arr, "InsertionSort");
 	}
-	//bucketSort	
+	//bucketSort
 	public static void bucketSort(int[] arr) {
 		init();
 		int maxValue=9;
 		
 		int[] bucket = new int[maxValue+1];
-		for(int n:arr)
+		for(int n:arr) 
 			bucket[n]++;
-		int index=0;
-		for(int i=0;i<bucket.length;i++) {
+		int pos=0;
+		for(int i=0;i<bucket.length;i++)
 			for(int j=0;j<bucket[i];j++)
-				arr[index++]=i;
-		}
+				arr[pos++]=i;
+		
 	    display(arr,"BucketSort");
 	}
 	//pancake sort
@@ -206,7 +208,7 @@ public class Sorts_bckup {
 			heapify(arr, n, largest);
 		}
 	}
-	//Binary Search
+	//Binary Search: find 5
 	public static int binarySearch(int x) {
 		int[] arr = new int[] {9,1,2,7,8,3,4,5};
 		Arrays.sort(arr);
@@ -226,7 +228,6 @@ public class Sorts_bckup {
 	}
 	
 	public static int binarySearchRecursion(int[] arr, int start, int end, int n) {
-		
 		if(start>end)
 			return -1;
 		int mid = (start+end)/2;
@@ -236,6 +237,27 @@ public class Sorts_bckup {
 			return binarySearchRecursion(arr, start, mid-1, n);
 		else
 			return binarySearchRecursion(arr, mid+1, end, n);
+	}
+	//rotated arr, binary search
+	public static int binarySearch_rotated(int[] arr, int target) {
+		int start=0, end=arr.length-1;
+		while(start<=end) {
+			int mid = (start+end)/2;
+			if(arr[mid]==target) return mid;
+			if(arr[mid]>arr[start] || arr[mid]>arr[end]) {
+				if(target>=arr[start] && target<arr[end])
+					end=mid-1;
+				else
+					start=mid+1;
+			}else if(arr[mid]<arr[start] || arr[mid]<arr[end]){
+				if(target>arr[mid] && target<=arr[end])
+					start=mid+1;
+				else
+					end=mid-1;
+			}else
+				end--;
+		}
+		return -1;
 	}
 	
 }

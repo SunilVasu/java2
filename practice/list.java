@@ -1,10 +1,10 @@
 package practice;
 
-class Node{
-	int data;
-	Node next;
-	Node(int data){
-		this.data=data;
+class ListNode{
+	int val;
+	ListNode next;
+	ListNode(int val){
+		this.val=val;
 		next=null;
 	}
 }
@@ -12,59 +12,49 @@ public class list {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		linkedList();
-		removeSmallestNode();
+		ListNode root = init();
+		display(root, "#Remove elem greater than n\nInput");
+		root=removeListNode(root,15);
+		display(root, "After Update");
 		
+		root = init();
+		display(root, "\n#Remove duplicates\nInput");
+		root = removeListNode_duplicate(root);
+		display(root,"Res");
+		
+		root = init();
+		display(root, "\n#Remove All duplicates\nInput");
+		root = removeListNode_duplicate2(root);
+		display(root,"Res");
+		
+		root = init();
+		display(root, "\n#Remove smallest elem\nInput");
+		root = removeSmallestListNode(root);
+		display(root,"Res");
 		sum();
 	}
-	public static void linkedList() {
-		Node temp=new Node(20);
-		temp.next=new Node(15);
-		temp.next.next=new Node(25);
-		temp.next.next.next=new Node(20);
-		Node root=temp;
-		
-		display(temp);
-		root=removeNode3(root,15);
-		System.out.println("After Update");
-		display(root);
+	public static ListNode init() {
+		ListNode temp=new ListNode(5);
+		temp.next=new ListNode(15);
+		temp.next.next=new ListNode(15);
+		temp.next.next.next=new ListNode(25);
+		return temp;
 	}
-	public static void display(Node n) {
+	public static void display(ListNode n, String name) {
+		System.out.print(name+" : ");
 		while(n!=null) {
-			System.out.println(n.data);
+			System.out.print(n.val+" - ");
 			n=n.next;
 		}
+		System.out.println();
 	}
-	//remove nodes greater than x
-	//cloudera submitted code
-	public static Node removeNode(Node start, int x) {
-		if(start==null) return start;
-		if(start.data>x && start.next==null) return null;
-		
-		Node curr = start;
-		Node prev = null;
-		
-		while(curr!=null && curr.data>x) {
-			prev=curr;
-			curr=curr.next;
-		}
-		if(prev!=null) prev.next=null;
-		Node newHead = curr;
-		while(curr.next!=null) {
-			if(curr.next.data>x)
-				curr.next=curr.next.next;
-			else
-				curr=curr.next;
-		}
-		return newHead;
-	}
-	//optimized
-	public static Node removeNode3(Node start, int x) {
-		Node dummy = new Node(0);
+	//optimized: remove ListNode greater/equal than x
+	public static ListNode removeListNode(ListNode start, int x) {
+		ListNode dummy = new ListNode(0);
 		dummy.next = start;
-		Node curr = dummy;
+		ListNode curr = start;
 		while(curr.next!=null) {
-			if(curr.next.data>x)
+			if(curr.next.val==x)
 				curr.next = curr.next.next;
 			else
 				curr=curr.next;
@@ -72,51 +62,85 @@ public class list {
 		return dummy.next;
 	}
 	//remove duplicate elem from sorted list
-	public static Node removeNode2(Node start, int x) {
-		Node curr=start;
-		while(curr!=null && curr.next!=null) {
-			if(curr.data==curr.next.data)
-				curr.next=curr.next.next;
+	public static ListNode removeListNode_duplicate(ListNode start) {
+		ListNode curr = start;
+		while(curr.next!=null) {
+			if(curr.val == curr.next.val)
+				curr.next = curr.next.next;
 			else
-				curr=curr.next;
+				curr = curr.next;
 		}
 		return start;
 	}
-	//cloudera
-	public static void removeSmallestNode() {
-		Node head = new Node(10);
-		head.next = new Node(5);
-		head.next.next = new Node(15);
-		
-		Node temp=head;
-		Node smallest=head;
-		Node prev=null;
-		
+	//remove ALL duplicate elements from sorted list
+	public static ListNode removeListNode_duplicate2(ListNode start) {
+		ListNode dummy = new ListNode(0);
+		dummy.next = start;
+		ListNode prev = dummy;
+		ListNode curr = start;
+		while(curr!=null) {
+			while(curr.next!=null && curr.val==curr.next.val)
+				curr=curr.next;
+			if(prev.next == curr)
+				prev = prev.next;
+			else
+				prev.next = curr.next;
+			curr = curr.next;
+		}
+		return dummy.next;
+	}
+	//*cloudera onsite*: remove the smallest ListNode from a list
+	public static ListNode removeSmallestListNode(ListNode head) {
+		ListNode temp = head;
+		ListNode prev = null;
+		ListNode smallest = head;
 		while(temp!=null) {
-			if(temp.next!=null && temp.next.data<smallest.data) {
+			if(temp.next!=null && temp.next.val<smallest.val) {
 				smallest = temp.next;
 				prev=temp;
 			}
 			temp=temp.next;
 		}
-		if(smallest==head)
+		if(smallest == head)
 			head = head.next;
 		else
-			prev.next=smallest.next;
-		
-		while(head!=null) {
-			System.out.print("-"+head.data);
-			head=head.next;
-		}
+			prev.next = smallest.next;
+		return head;
 	}
+	
+	//sum of arr elems
 	public static void sum() {
 		int[] arr = new int[] {5,10,15};
-		System.out.println("\nSum:"+helper(arr,0));
+		System.out.println("\nSum of given arr:"+helper(arr,0));
 	}
 	public static int helper(int[] arr, int n) {
 		if(n==arr.length)
 			return 0;
 		return arr[n]+helper(arr, n+1);
+	}
+	
+	//remove ListNodes greater than x
+	//cloudera submitted code
+	public static ListNode removeListNode_C(ListNode start, int x) {
+		if(start==null) return start;
+		if(start.val>x && start.next==null) return null;
+		
+		ListNode curr = start;
+		ListNode prev = null;
+		
+		while(curr!=null && curr.val>x) {
+			prev=curr;
+			curr=curr.next;
+		}
+		if(prev!=null) prev.next=null;
+		ListNode newHead = curr;
+		while(curr.next!=null) {
+			if(curr.next.val>x)
+				curr.next=curr.next.next;
+			else
+				curr=curr.next;
+		}
+		return newHead;
 	}
 
 }

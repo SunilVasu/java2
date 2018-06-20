@@ -1,4 +1,4 @@
-package com;
+package sort;
 
 import java.util.Arrays;
 
@@ -19,6 +19,8 @@ public class peeks_valleys {
 
         System.out.print("\nSort2 Result:: ");
         pv.sort2(arr);
+        
+        matrix();
     }
     // Sort method 1::
     //peek_valley generation after sorting the array
@@ -36,6 +38,7 @@ public class peeks_valleys {
     // Sort method 2::
     // peek & valley generation without sort function
     public static void sort2(int[] arr) {
+    	arr = new int[]{0,1,4,7,8,9};
     	for(int i=1;i<arr.length;i++) {
     		int biggestIndex = biggestIndex(arr, i-1, i, i+1);
     		if(i!=biggestIndex) {
@@ -57,5 +60,30 @@ public class peeks_valleys {
     	if(max==aVal) return a;
     	else if(max==bVal) return b;
     	else return c;
+    }
+    //Sorted matrix search
+    public static void matrix() {
+    	int[][] matrix = new int[][] {{15,20,25,30},{35,40,45,50},{55,60,65,70},{75,80,85,90}};
+    	
+    	System.out.println("\nMatrix::");
+    	for(int i=0;i<matrix.length;i++) {
+    		for(int j=0;j<matrix.length;j++) {
+    			System.out.print(matrix[i][j]+" ");
+    		}
+    		System.out.println();
+    	}
+    	
+    	int target = 60;
+    	int row = 0, col=matrix[0].length-1;
+    	while(row<matrix.length && col>=0) {
+    		if(matrix[row][col]==target) {
+    			System.out.println("Element found:"+matrix[row][col]+" at:"+row+"-"+col);
+    			return;
+    		}else if(matrix[row][col]<target)
+    			row++;
+    		else
+    			col--;
+    	}
+    	System.out.println("Target not found");
     }
 }

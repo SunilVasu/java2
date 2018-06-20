@@ -1,4 +1,4 @@
-package com;
+package string;
 
 import java.util.Arrays;
 import java.util.HashSet;
@@ -42,16 +42,18 @@ public class string {
 		for(char c:input.toCharArray())
 			ch[index++]=c;
 		while(p1<p2) {
-			while(p1<p2 && !vowels.contains(ch[p1]+""))
+			if(!vowels.contains(ch[p1]+"")) {
 				p1++;
-			while(p1<p2 && !vowels.contains(ch[p2]+""))
-				p2--;
-			if(p1<p2) {
-				ch[p1]=input.charAt(p2);
-				ch[p2]=input.charAt(p1);
-				p1++;
-				p2--;
+				continue;
 			}
+			if(!vowels.contains(ch[p2]+"")) {
+				p2--;
+				continue;
+			}
+			ch[p1]=input.charAt(p2);
+			ch[p2]=input.charAt(p1);
+			p1++; p2--;
+				
 		}
 		System.out.println("\nReversed vowels string:"+String.valueOf(ch));
 	}
@@ -100,44 +102,51 @@ public class string {
 		String s = "hheeq";
 		List<String> res = new LinkedList<>();
 		int count=0;
-		int[] table = new int[128];
+		int[] arr = new int[128];
 		for(int i=0;i<s.length();i++) {
-			table[s.charAt(i)]++;
-			count=table[s.charAt(i)]%2==0?count-1:count+1;
+			arr[s.charAt(i)]++;
+			if(arr[s.charAt(i)]%2==0)
+				count--;
+			else
+				count++;
 		}
 		if(s=="" || count>1) {
-			System.out.println("No Palindrome Permutation");
+			System.out.println("No Palindromic Permutation");
 			return;
 		}
 		String temp="";
-		for(int i=0;i<128 && count==1;i++) {
-			if(table[i]%2==1) {
-				temp+=(char)i;
-				break;
+		if(count==1) {
+			for(int i=0;i<128;i++) {
+				if(arr[i]%2==1) {
+					temp+=(char)i;
+					break;
+				}
 			}
 		}
-		backtrack(table, res, temp, s.length());
+		backtrack(arr,res, temp, s.length());
+		System.out.print("PalindromePermutation2:  ");
 		display(res);
 	}
-	public static void backtrack(int[] table, List<String> res, String curr, int len) {
+	public static void backtrack(int[] arr, List<String> res, String curr, int len) {
 		if(curr.length()==len) {
 			res.add(curr);
 			return;
 		}
 		for(int i=0;i<128;i++) {
-			if(table[i]>1) {
-				table[i]-=2;
-				char c = (char)i;
-				String temp = c+curr+c;
-				backtrack(table, res, temp, len);
-				table[i]+=2;
+			if(arr[i]>1) {
+				arr[i]-=2;
+				String temp = (char)i+ curr +(char)i;
+				backtrack(arr, res, temp, len);
+				arr[i]+=2;
 			}
 		}
 	}
 	
 	public static void display(List<String> list) {
+		System.out.print("[ ");
 		for(String s:list)
-			System.out.println(s);
+			System.out.print(s+" ");
+		System.out.println("]");
 	}
 	/*
 	One Edit Away:
@@ -148,14 +157,14 @@ public class string {
 	pale, bae -> false
 	*/
 	public static void oneEditAway() {
-		String s1="pale", s2="aleppp";
+		String s1="pale", s2="paleq";
 		boolean check=false;
 		if(s1.length()==s2.length()) {
 			check=oneEditReplace(s1,s2);
 			System.out.println("oneEditReplace:"+check);
 		}			
 		else if(s1.length()+1==s2.length()) {
-			check=oneEditInsert(s1,s2);
+			check=oneEditInsert(s1,s2); //(smaller, larger)
 			System.out.println("oneEditInsert_1:"+check);
 		}			
 		else if(s1.length()-1==s2.length()) {

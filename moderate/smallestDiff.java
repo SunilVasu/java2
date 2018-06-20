@@ -13,6 +13,7 @@ public class smallestDiff {
 		commonMin();
 		smallestDifference();
 		factorialZeros();
+		factZeros();
 		//fibin
 		int n=5;
 		System.out.println("Fibonacci Series:");
@@ -41,7 +42,7 @@ public class smallestDiff {
 		min = min==Integer.MAX_VALUE?0:min;
 		System.out.println("min:"+min);
 		
-		//Common elem in two arr;
+		//find ALL common elem in 2 arr;
 		a = new int[] {8,7,3,2,1};
 		b = new int[] {10,2,1,30,40};
 		Arrays.sort(a);
@@ -53,20 +54,20 @@ public class smallestDiff {
 				list.add(a[p1]);
 				p1++;p2++;
 			}				
-			else if(a[p1]>b[p2])
-				p2++;
-			else 
+			else if(a[p1]<b[p2])
 				p1++;
+			else 
+				p2++;
 		}
-		System.out.print("Common Elem:");
+		System.out.print("Common Elem = ");
 		for(int n:list) 
 			System.out.print(n+" ");
 	}
-	//Given two arrays of integers, compute the pair of values (one value in each
+	//Given 2 arrays of integers, compute the pair of values (one value in each
 	//array) with the smallest (non-negative) difference. Return the difference.
 	public static void smallestDifference() {
-		int[] a = new int[] {3,6,1,9};
-		int[] b = new int[] {19, 15, 12, 17};
+		int[] a = new int[] {1,4,6,8};  //9&8
+		int[] b = new int[] {9,7,12};
 		Arrays.sort(a);
 		Arrays.sort(b);
 		int p1=0, p2=0, diff=Integer.MAX_VALUE;
@@ -78,11 +79,12 @@ public class smallestDiff {
 			else
 				p2++;			
 		}
-		System.out.println("smallestDifference:"+diff);
+		System.out.println("\nsmallestDifference:"+diff);
 	}
+	
 	//trailing zeros in factorial
 	public static void factorialZeros() {
-		int num=5;
+		int num=19;
 		int count=0;
 		for(int i=2;i<=num;i++)
 			count+=factorsOf5(i);
@@ -100,6 +102,14 @@ public class smallestDiff {
 			i/=5;
 		}
 		return count;
+	}
+	//factorial trailing zeros optimized
+	public static void factZeros() {
+		int num=19;
+		int count=0;
+		for(int i=5;num/i>0;i*=5)
+			count+=num/i;
+		System.out.println("factZeros="+count);
 	}
 	//Time Complexity: T(n) = T(n-1) + T(n-2) which is exponential.
 	//Extra Space: O(n) if we consider the function call stack size, otherwise O(1).

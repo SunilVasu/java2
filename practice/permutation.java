@@ -1,17 +1,16 @@
 package practice;
 
-import java.util.HashSet;
+
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
+
 
 public class permutation {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		stringPermutation();
-		permutation();
+		permutationNum();
 		genParen();
 		paint();
 	}
@@ -24,16 +23,18 @@ public class permutation {
 				count=0;
 				System.out.println("");
 			}
-		}System.out.println("");
+		}
+		System.out.println("");
 	}
 	public static void stringPermutation() {
+		System.out.println("String Permutation::");
 		String str = "abc";
 		List<String> list = new LinkedList<>();
-		/*helper(list, str,"");
-		display(list);*/
+		helper(list, str,"");
+		display(list);
 		
 		helper2(str,"");
-			
+		System.out.println("");	
 	}
 	//String permutation
 	public static void helper(List<String> list, String str, String prefix) {
@@ -48,7 +49,7 @@ public class permutation {
 	}
 	public static void helper2(String str, String prefix) {
 		if(str.length()==0)
-			System.out.println(prefix);
+			System.out.print(prefix+"-");
 		else {
 			for(int i=0;i<str.length();i++) {
 				String rem = str.substring(0, i)+str.substring(i+1);
@@ -57,7 +58,7 @@ public class permutation {
 		}
 	}
 	//permutation	
-	public static void permutation() {
+	public static void permutationNum() {
 		int[] nums = new int[] {1,2};
 		List<List<Integer>> list = new LinkedList<>();
 		backtrack(list, new LinkedList<>(), nums);
@@ -102,7 +103,7 @@ public class permutation {
 		}
 	}
 	public static void paint() {
-		int n=5;
+		int n=2;
 		Color[][] screen = new Color[n][n];
 		Random rand = new Random();
 		

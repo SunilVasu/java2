@@ -1,4 +1,4 @@
-package com;
+package sort;
 
 import java.util.ArrayList;
 import java.util.Arrays;

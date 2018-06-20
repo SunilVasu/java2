@@ -25,7 +25,7 @@ public class Dijkstra {
     }
     public void dijkstra(int[][] graph, int src){
         int[] dist = new int[V];
-        boolean[] sptSet = new boolean[V];
+        boolean[] sptSet = new boolean[V]; //shortest path tree set
         //initialize to default val
         for(int i=0;i<V;i++){
             dist[i]=Integer.MAX_VALUE;
@@ -41,9 +41,9 @@ public class Dijkstra {
             sptSet[u]=true;
             //update dist value of adjacent vertices
             for(int v=0;v<V;v++){
-                //update dist[v] only if #its is not in sptSet, #edge exist between u&v,
+                //update dist[v] only if #it is not in sptSet, #edge exist between u-v,
                 // #total wt of path smaller then curr val, dist[v]
-                if(!sptSet[v] && graph[u][v]!=0 && dist[u]!=Integer.MAX_VALUE &&
+                if(!sptSet[v] && dist[u]!=Integer.MAX_VALUE && graph[u][v]!=0  &&
                         dist[u]+graph[u][v]<dist[v])
                     dist[v]=dist[u]+graph[u][v];
             }
@@ -52,7 +52,7 @@ public class Dijkstra {
     }
     public static void main(String[] args){
         //                            0, 1, 2, 3, 4, 5, 6, 7, 8
-        int graph[][] = new int[][]{ {0, 4, 0, 0, 0, 0, 0, 8, 0},   //0
+        int graph[][] = new int[][]{ {0, 4, 0, 0, 0, 0, 0, 8, 0},   //0   distance of Node '0' to other nodes
                                      {4, 0, 8, 0, 0, 0, 0, 11,0},   //1
                                      {0, 8, 0, 7, 0, 4, 0, 0, 2},   //2
                                      {0, 0, 7, 0, 9, 14,0, 0, 0},   //3

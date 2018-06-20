@@ -25,11 +25,12 @@ public class arr {
 		int[] arr = new int[] {1,6,7,1,2,1,3,1,2,1,1};
 		int majority=0, count=0;
 		for(int n:arr) {
-			if(count==0)
-				majority=n;
-			if(majority==n)
+			if(n==majority)
 				count++;
-			else
+			else if(count==0) {
+				majority=n;
+				count++;
+			}else
 				count--;
 			//System.out.println(majority+" count: "+count);
 		}

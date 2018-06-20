@@ -2,7 +2,39 @@ package java_basic;
 
 import java.util.NoSuchElementException;
 
-class arrStack{
+
+class stack{
+	int[] arr;
+	int top;
+	int capacity;
+	public stack(int capacity) {
+		this.capacity=capacity;
+		arr = new int[capacity];
+		top=-1;
+	}
+	boolean isFull() {
+		return this.top==this.capacity;
+	}
+	boolean isEmpty() {
+		return top<0;
+	}
+	boolean push(int item) {
+		if(top==capacity)
+			throw new IndexOutOfBoundsException("Stack is Full");
+		arr[++top]=item;
+		return true;
+	}
+	int pop() {
+		if(isEmpty())
+			throw new NoSuchElementException("Stack is Empty");
+		int x = arr[top--];
+		return x;
+	}
+}
+
+
+
+/*class arrStack{
 	int[] arr;
 	int top;
 	int capacity;
@@ -29,12 +61,12 @@ class arrStack{
 		int x = arr[top--];
 		return x;
 	}
-}
+}*/
 public class test_stack {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		arrStack stack = new arrStack(10);
+		stack stack = new stack(10);
 		System.out.println(stack.push(10));
 		System.out.println(stack.push(20));
 		System.out.println(stack.push(30));

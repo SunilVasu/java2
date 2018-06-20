@@ -1,4 +1,4 @@
-package com;
+package string;
 
 public class String2 {
 
@@ -6,6 +6,8 @@ public class String2 {
 		// TODO Auto-generated method stub
 		longest();
 		palindromic();
+		
+		permutationOfString();
 	}
 	public static void longest() {
 		String s = "Hello and welcome!";
@@ -47,5 +49,20 @@ public class String2 {
 		}
 		return true;
 	}
-
+	//find all permutation of String
+	public static void permutationOfString() {
+		String str = "abc";
+		System.out.print("permutationOfString: ");
+		backtrack(str,"");
+	}
+	public static void backtrack(String str, String prefix) {
+		if(str.length()==0) {
+			System.out.print(prefix+" ");
+			return;
+		}
+		for(int i=0;i<str.length();i++) {
+			String temp = str.substring(0, i)+str.substring(i+1);
+			backtrack(temp, prefix+str.charAt(i));
+		}
+	}
 }

@@ -24,17 +24,17 @@ public class k_multiple {
 	}
 	//Runtime: allPossibilities=O(k^3) + sort=O(k^3*log(k^3)) => O(k^3*log(k))
 	public static List<Integer> allPossibilities(int k){
-		List<Integer> values = new ArrayList<>();
+		List<Integer> values = new LinkedList<>();
 		for(int a=0;a<=k;a++) {
-			int powA = (int)Math.pow(3, a);
+			int pow3 = (int)Math.pow(3, a);
 			for(int b=0;b<=k;b++) {
-				int powB = (int)Math.pow(5, b);
+				int pow5 = (int)Math.pow(5, b);
 				for(int c=0;c<=k;c++) {
-					int powC = (int)Math.pow(7, c);
-					int val = powA*powB*powC;
+					int pow7 = (int)Math.pow(7, c);
+					int val = pow3*pow5*pow7;
 					
-					if(val==0 || powA==Integer.MAX_VALUE || powB==Integer.MAX_VALUE
-							|| powC==Integer.MAX_VALUE)
+					if(val==0 || pow3==Integer.MAX_VALUE || pow5==Integer.MAX_VALUE ||
+							pow7==Integer.MAX_VALUE)
 						val=Integer.MAX_VALUE;
 					values.add(val);
 				}
@@ -42,18 +42,18 @@ public class k_multiple {
 		}
 		return values;
 	}
+	//optimal
 	public static int getKthNumber(int k) {
-		int val=0;
 		Queue<Integer> q3 = new LinkedList<>();
 		Queue<Integer> q5 = new LinkedList<>();
 		Queue<Integer> q7 = new LinkedList<>();
 		q3.add(1);
-		
+		int val=0;
 		for(int i=0;i<=k;i++) {
-			int v3 = q3.size()>0? q3.peek(): Integer.MAX_VALUE;
-			int v5 = q5.size()>0? q5.peek(): Integer.MAX_VALUE;
-			int v7 = q7.size()>0? q7.peek(): Integer.MAX_VALUE;
-			val = Math.min(v3, Math.min(v5, v7));
+			int v3 = q3.size()>0? q3.peek():Integer.MAX_VALUE;
+			int v5 = q5.size()>0? q5.peek():Integer.MAX_VALUE;
+			int v7 = q7.size()>0? q7.peek():Integer.MAX_VALUE;
+			val = Math.min(Math.min(v3, v5), v7);
 			if(v3==val) {
 				q3.remove();
 				q3.add(3*val);
